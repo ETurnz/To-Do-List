@@ -32,4 +32,5 @@ jobs:
         echo "$SSH_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+        ssh-keygen -f "/home/runner/.ssh/known_hosts" -R "localhost"
         ssh ETurns@localhost 'cd "C:/Users/ETurns/Documents/_PROJECTS/To Do List/my_django_app" && git pull && docker-compose up -d'
