@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -23,3 +23,13 @@ jobs:
     - name: Run tests
       run: |
         python manage.py test
+    - name: Deploy to Home Computer
+      env:
+        SSH_KEY: ${{ secrets.SSH_KEY }}
+        SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+        ssh ETurns@localhost 'cd "C:/Users/ETurns/Documents/_PROJECTS/To Do List/my_django_app" && git pull && docker-compose up -d'
