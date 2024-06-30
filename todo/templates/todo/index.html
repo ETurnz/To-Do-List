@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>To-Do List</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">To-Do List</h1>
+        <a href="{% url 'logout' %}" class="btn btn-secondary mb-3">Sign Out</a> <!-- Signout button -->
+        <form action="{% url 'add' %}" method="post" class="form-inline mb-3">
+            {% csrf_token %}
+            <div class="form-group mr-2">
+                <input type="text" name="content" class="form-control" placeholder="Enter a new to-do item">
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+        <ul class="list-group">
+            {% for todo in todos %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ todo.content }}
+                <form action="{% url 'delete' todo.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
